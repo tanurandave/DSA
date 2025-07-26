@@ -1,0 +1,97 @@
+package JULY_DSA_TASK; 
+/*You are given an integer n which represents an array nums containing the numbers from 1 to n in order. Additionally, you are given a 2D array conflictingPairs, where conflictingPairs[i] = [a, b] indicates that a and b form a conflicting pair.
+
+Remove exactly one element from conflictingPairs. Afterward, count the number of non-empty subarrays of nums which do not contain both a and b for any remaining conflicting pair [a, b].
+
+Return the maximum number of subarrays possible after removing exactly one conflicting pair.
+
+ 
+
+Example 1:
+
+Input: n = 4, conflictingPairs = [[2,3],[1,4]]
+
+Output: 9
+
+Explanation:
+
+Remove [2, 3] from conflictingPairs. Now, conflictingPairs = [[1, 4]].
+There are 9 subarrays in nums where [1, 4] do not appear together. They are [1], [2], [3], [4], [1, 2], [2, 3], [3, 4], [1, 2, 3] and [2, 3, 4].
+The maximum number of subarrays we can achieve after removing one element from conflictingPairs is 9.
+Example 2:
+
+Input: n = 5, conflictingPairs = [[1,2],[2,5],[3,5]]
+
+Output: 12
+
+Explanation:
+
+Remove [1, 2] from conflictingPairs. Now, conflictingPairs = [[2, 5], [3, 5]].
+There are 12 subarrays in nums where [2, 5] and [3, 5] do not appear together.
+The maximum number of subarrays we can achieve after removing one element from conflictingPairs is 12.
+ */
+import java.util.*;
+
+class Solution {
+
+    public int maxSubarrays(int n, int[][] conflictingPairs) {
+        int maxValid = 0;
+
+        for (int skip = 0; skip < conflictingPairs.length; skip++) {
+            Map<Integer, Set<Integer>> conflictMap = new HashMap<>();
+
+            for (int i = 0; i < conflictingPairs.length; i++) {
+                if (i == skip) continue;
+
+                int a = conflictingPairs[i][0];
+                int b = conflictingPairs[i][1];
+
+                conflictMap.computeIfAbsent(a, k -> new HashSet<>()).add(b);
+                conflictMap.computeIfAbsent(b, k -> new HashSet<>()).add(a);
+            }
+
+            int[] freq = new int[n + 2];
+            int left = 1;
+            int count = 0;
+
+            for (int right = 1; right <= n; right++) {
+                while (hasConflict(conflictMap, freq, right)) {
+                    freq[left]--;
+                    left++;
+                }
+
+                freq[right]++;
+                count += (right - left + 1);
+            }
+
+            maxValid = Math.max(maxValid, count);
+        }
+
+        return maxValid;
+    }
+
+    private boolean hasConflict(Map<Integer, Set<Integer>> conflictMap, int[] freq, int current) {
+        if (!conflictMap.containsKey(current)) return false;
+
+        for (int conflict : conflictMap.get(current)) {
+            if (freq[conflict] > 0) return true;
+        }
+        return false;
+    }
+}
+
+public class Solution1 {
+    public static void main(String[] args) {
+        Solution s = new Solution();
+
+        // Test case 1
+        int n1 = 4;
+        int[][] pairs1 = {{2, 3}, {1, 4}};
+        System.out.println("Test 1 Output: " + s.maxSubarrays(n1, pairs1)); // Expected: 9
+
+        // Test case 2
+        int n2 = 5;
+        int[][] pairs2 = {{1, 2}, {2, 5}, {3, 5}};
+        System.out.println("Test 2 Output: " + s.maxSubarrays(n2, pairs2)); // Expected: 12
+    }
+}
