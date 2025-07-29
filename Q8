@@ -1,0 +1,53 @@
+package JULY_DSA_TASK;
+
+import java.util.HashMap;
+import java.util.Stack;
+
+public class Valid_Parenthesis_Or_Not {
+
+	public boolean isValid(String s) {
+		Stack<Character> stack=new Stack<>();
+		HashMap<Character, Character> mapele=new HashMap<>();
+		
+		mapele.put(')', '(');
+		mapele.put(']', '[');
+		mapele.put('}', '{');
+		
+		for(char c: s.toCharArray()) {
+			 if(mapele.containsKey(c)) {
+				 if(!stack.isEmpty()&&stack.peek()==mapele.get(c)) {
+					 stack.pop();
+				 }else {
+					 return false;
+				 }
+			 }else {
+				 stack.push(c);
+			 }
+		}
+		return stack.isEmpty();
+		
+	}
+	public static void main(String[] args) {
+		String s1= "[]";
+		String s2= "[]}";
+		
+		Valid_Parenthesis_Or_Not s=new Valid_Parenthesis_Or_Not();
+		boolean result=s.isValid(s1);
+		boolean result1=s.isValid(s2);
+		
+		if(result) {
+			System.out.println("it is valid parenthesis");
+		}else {
+
+			System.out.println("it is  not valid parenthesis");
+		}
+		if(result1) {
+			System.out.println("it is valid parenthesis");
+		}else {
+
+			System.out.println("it is  not valid parenthesis");
+		}
+
+	}
+
+}
