@@ -1,0 +1,31 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner sc=new Scanner(System.in);
+		int N=sc.nextInt();
+		
+		String numStr=String.valueOf(N);
+		int digits=numStr.length();
+		
+		int temp=N;
+		int sum=0;
+		
+		while(temp>0){
+		    int digit=temp%10;
+		    sum+=Math.pow(digit,digits);
+		    temp/=10;
+		}
+		if(sum==N){
+		    System.out.println("armstrong");
+		}
+		else{
+		    System.out.println("not armstrong");
+		}
+
+	}
+}
