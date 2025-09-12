@@ -2,7 +2,7 @@ package SEPT_TASK;
 
 import java.util.Scanner;
 
-public class Codechef12 {
+public class Codechef12_a {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -31,3 +31,4 @@ public class Codechef12 {
         sc.close();
     }
 }
+
