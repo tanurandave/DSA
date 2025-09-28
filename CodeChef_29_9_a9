@@ -18,8 +18,8 @@ class Codechef
         int maxMangoes=(Z-Y)/X;
          if(maxMangoes<0){
              maxMangoes=0;
-             System.out.println(maxMangoes);
          }
+         System.out.println(maxMangoes);
     }
 	}
 }
